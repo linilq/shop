@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="linilq.shop.dao.SysUserMapper">
+    <resultMap id="BaseResultMap" type="linilq.shop.bean.database.SysUser">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <id column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <id column="pass_word" property="passWord" jdbcType="VARCHAR"/>
+        <id column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <id column="salt" property="salt" jdbcType="VARCHAR"/>
+        <id column="lock_state" property="lockState" jdbcType="INTEGER"/>
+
+        <id column="is_delete" property="isDelete" jdbcType="INTEGER"/>
+        <id column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <id column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <id column="create_time" property="createTime" jdbcType="DATE"/>
+        <id column="update_time" property="updateTime" jdbcType="DATE"/>
+
+    </resultMap>
+
+    <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from tcUser where user_name = #{userName}
+    </select>
+
+</mapper>

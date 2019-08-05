@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- https://blog.csdn.net/lqzkcx3/article/details/78159708 默认注册了handlerMapping、handlerAdapter、ExceptionResolver等组件-->
+    <mvc:annotation-driven/>
+    <!-- 静态资源文件访问,交由springMvc框架自己处理，还有一种方式：https://blog.csdn.net/l00149133/article/details/78982336 -->
+    <mvc:resources mapping="static/**" location="/resource/static/"/>
+    <context:component-scan base-package="linilq.shop"/>
+
+    <!-- mybatisplus配置 -->
+    <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="linilq.shop.dao"/>
+    </bean>
+
+    <!-- 还需要视图解析器、异常处理、编码处理器 -->
+    <bean name="freemarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <property name="contentType" value="text/html; charset=UTF-8"/>
+        <property name="exposeRequestAttributes" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="cache" value="false" />
+        <property name="suffix" value=".ftl" />
+        <property name="order" value="0"/>
+    </bean>
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/resource/template/"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+</beans>
